@@ -135,8 +135,8 @@ class Missle(Sprite):
             self.status = "ready"
     def fire(self):
           if self.status == "ready":
-                 sound = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\lazer.mp3")
-                 sound.play()
+                 # sound = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\lazer.mp3")
+                 # sound.play()
                  self.goto(player.xcor(),player.ycor())
                  self.setheading(player.heading())
                  self.status = "firing"
@@ -270,8 +270,8 @@ while True:
                      if game.score < -10:
                            break
               if missle.is_collision(enemy):
-                sound = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\explosion.mp3")
-                sound.play()
+                # sound = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\explosion.mp3")
+                # sound.play()
                 x = random.randint(-250,250)
                 y = random.randint(-250,250)
                 enemy.goto(x,y)
@@ -356,8 +356,8 @@ while True:
               
         if player.is_collision(enemy):
                 
-                soundl = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\explosion.mp3")
-                soundl.play()
+                # soundl = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\explosion.mp3")
+                # soundl.play()
                 x = random.randint(-250,250)
                 y = random.randint(-250,250)
                 enemy.goto(x,y)
