@@ -1,7 +1,8 @@
 import turtle
 import pygame# type: ignore
+import time
+start_time = time.time()
 pygame.mixer.init()
-choose = input("do you want multiplayer or AI?")
 wn = turtle.Screen()
 wn.title("ping pong!")
 wn.bgcolor("black")
@@ -68,11 +69,14 @@ def paddle_b_down():
     y = paddle_b.ycor()
     y -= 20
     paddle_b.sety(y)
+
+# Keyboard bindings
 wn.listen()
-wn.onkeypress(paddle_a_up,"w")
-wn.onkeypress(paddle_a_down,"s")
-# wn.onkeypress(paddle_b_down,"Down")
-# wn.onkeypress(paddle_b_up,"Up")
+wn.onkeypress(paddle_a_up, "w")
+wn.onkeypress(paddle_a_down, "s")
+wn.onkeypress(paddle_b_up, "Up")
+wn.onkeypress(paddle_b_down, "Down")
+
 while True:
     wn.update()
     for ball in balls:
@@ -113,18 +117,32 @@ while True:
             ball.dx *= -1
             sound4 = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\lazer.mp3")
             sound4.play()
-    if choose == "AI":
+        if score_b > 10:
+            turtle.bye()
+            break
+            
+        if score_b > 10:
+            end_time = time.time()  # end the timer
+
+            elapsed_time = end_time - start_time   # calculate the elapsed time
+            
+            print("Elapsed time:" + elapsed_time + "seconds")
+            
 #AI player
-        closest_ball = balls[0]
-        for ball in balls:
-            if ball.xcor() > closest_ball.xcor():
-                closest_ball = ball
+    closest_ball = balls[0]
+    for ball in balls:
+        if ball.xcor() > closest_ball.xcor():
+            closest_ball = ball
 
     
-        if paddle_b.ycor() < closest_ball.ycor() and abs(paddle_b.ycor() - closest_ball.ycor()) > 10:
-            paddle_b_up()
-        elif paddle_b.ycor() > closest_ball.ycor() and abs(paddle_b.ycor() - closest_ball.ycor()) > 10:
-            paddle_b_down()
+    if paddle_b.ycor() < closest_ball.ycor() and abs(paddle_b.ycor() - closest_ball.ycor()) > 10:
+        paddle_b_up()
+    elif paddle_b.ycor() > closest_ball.ycor() and abs(paddle_b.ycor() - closest_ball.ycor()) > 10:
+        paddle_b_down()
+
+    
+
+    
     
 
     
