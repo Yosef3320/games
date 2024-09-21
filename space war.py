@@ -22,7 +22,7 @@ else:
 #setting the animation speed, backround color
 turtle.speed(0)
 turtle.title("Yosef's Space war")
-turtle.bgcolor("blue")
+turtle.bgcolor("black")
 #turtle.bgpic("starfield.gif")
 #hiding the default turtle
 turtle.ht()
