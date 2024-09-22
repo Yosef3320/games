@@ -69,6 +69,8 @@ def paddle_b_down():
     y = paddle_b.ycor()
     y -= 20
     paddle_b.sety(y)
+def bye():
+    turtle.bye()
 
 # Keyboard bindings
 wn.listen()
@@ -76,7 +78,7 @@ wn.onkeypress(paddle_a_up, "w")
 wn.onkeypress(paddle_a_down, "s")
 wn.onkeypress(paddle_b_up, "Up")
 wn.onkeypress(paddle_b_down, "Down")
-
+wn.onkeypress(bye,"l")
 while True:
     wn.update()
     for ball in balls:
@@ -127,6 +129,7 @@ while True:
             elapsed_time = end_time - start_time   # calculate the elapsed time
             
             print("Elapsed time:" + elapsed_time + "seconds")
+            turtle.end_poly()
             
 #AI player
     closest_ball = balls[0]
@@ -140,9 +143,6 @@ while True:
     elif paddle_b.ycor() > closest_ball.ycor() and abs(paddle_b.ycor() - closest_ball.ycor()) > 10:
         paddle_b_down()
 
-    
-
-    
     
 
     
