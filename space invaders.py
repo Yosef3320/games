@@ -14,7 +14,12 @@ wn.screensize(800, 800) #  we did this
 width = wn.window_width() // 2  #  Half width for borders  --> We did this
 height = wn.window_height() // 2  #  Half height for borders  --> we did this
 wn.bgcolor("black")
+wn.bgpic(r"c:\Users\joe\OneDrive\Pictures\1d69B.gif")
+
 wn.title("SPACE INVADERS")
+#wn.register_shape(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\spaceinvaders-videogames.gif")
+wn.addshape(r"c:\Users\joe\OneDrive\Pictures\becgl98ab3c61.gif")
+wn.addshape(r"c:\Users\joe\OneDrive\Pictures\spaceinvaders-videogames.gif")
 turtle.tracer(2)
 
 #  Optional: Maximize window directly
@@ -42,7 +47,7 @@ scorepen = turtle.Turtle()
 scorepen.speed(0)
 scorepen.color("white")
 scorepen.penup()
-scorepen.setposition(-800,405)
+scorepen.setposition(-650,405)
 scorestring = "Score: %s"%score
 scorepen.write(scorestring, False, align="left",font=("Arial",23,"normal"))
 scorepen.hideturtle()
@@ -51,7 +56,8 @@ scorepen.hideturtle()
 # creating the player
 player = turtle.Turtle()
 player.color("blue")
-player.shape("triangle")
+player.shape(r"c:\Users\joe\OneDrive\Pictures\becgl98ab3c61.gif")
+#player.shape("player.gif")
 player.penup()
 player.speed(0)
 # player.setposition(0, -250)
@@ -62,11 +68,16 @@ playerspeed = 15
 
 numberofenemies = 5
 enemies = []
+# if score == 100:
+#     turtle.
+    # numberofenemies = 6
 for i in range(numberofenemies):
     enemies.append(turtle.Turtle())
 for enemy in enemies:
     enemy.color("maroon")
-    enemy.shape("circle")
+    enemy.shape('circle')
+    enemy.shape(r"c:\Users\joe\OneDrive\Pictures\spaceinvaders-videogames.gif")
+    # enemy.shape("c:\Users\joe\OneDrive\Pictures\what.jpg")   
     enemy.penup()
     enemy.speed(0)
     x = random.randint(-360,360)
@@ -80,7 +91,7 @@ enemyspeed = 2
 # create the bullet
 bullet = turtle.Turtle()
 bullet.color("gold")
-bullet.shape("triangle")
+bullet.shape("arrow")
 bullet.penup()
 bullet.speed(0)
 bullet.setheading(90)
@@ -147,6 +158,17 @@ while True:
             x += enemyspeed
             enemy.setx(x)
 
+
+            if enemy.ycor() < player.ycor():
+                print("bye")
+                sound4 = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\explosion.mp3")
+                sound4.play()
+                player.hideturtle()
+                enemy.hideturtle()
+                print("GAME OVER")
+                turtle.bye()
+                break
+
             # move the enemy back and down --> we did this whole section
             if enemy.xcor() > width:
                 for e in enemies:
@@ -175,19 +197,13 @@ while True:
                 sound2 = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\explosion.mp3")
                 sound2.play()
             if iscolision(player, enemy):
+                print("hy")
                 sound3 = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\explosion.mp3")
                 sound3.play()
                 player.hideturtle()
                 enemy.hideturtle()
-                print("GAME OVER")
-                break
-            if enemy.ycor() < -height:
-                sound4 = pygame.mixer.Sound(r"C:\Users\joe\OneDrive\Documents\python\Joe Games\Music files\explosion.mp3")
-                sound4.play()
-                player.hideturtle()
-                enemy.hideturtle()
-                print("GAME OVER")
                 turtle.bye()
+                print("GAME OVER")
                 break
             
 
