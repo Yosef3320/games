@@ -1,4 +1,3 @@
 # games
-This is where yosef puts his games if you want to play them there are games like ping pong,packman,space war,and many other games.
-Make sure to check out my new pong!(pacman is probaly on here in about a month and a half)
-Space invaders will be here in about 2-3 weeks!
+This is where yosef puts his games if you want to play them. there are games like ping pong,pacman,space war,and many other games.
+If you like math I also got a math testing thing!(note that the math testing can get more equations over time)
