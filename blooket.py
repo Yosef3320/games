@@ -2,7 +2,6 @@ import random
 import pygame
 from time import sleep
 from datetime import datetime
-import os
 
 print("Welcome to Blooket Pack Opening Simulator!!\nAre you ready to open some packs? (We also sell Blooks here)")
 sleep(4)
@@ -32,27 +31,13 @@ coins = 35
 
 # Define spinning wheel outcomes with probabilities
 SPINNING_WHEEL_OUTCOMES = [
-    (50, 10),  # 10% chance to get 50 coins
-    (25, 20),  # 20% chance to get 25 coins
-    (10, 30),  # 30% chance to get 10 coins
-    (5, 40),   # 40% chance to get 5 coins
+    (1000, 5),
+    (100, 15),
+    (70, 20),  # 10% chance to get 50 coins
+    (40, 25),  # 20% chance to get 25 coins
+    (20, 30),  # 30% chance to get 10 coins
+    (10, 35),   # 40% chance to get 5 coins
 ]
-
-# Load last spin date from a file
-def load_last_spin_date():
-    if os.path.exists("last_spin_date.txt"):
-        with open("last_spin_date.txt", "r") as file:
-            date_str = file.read().strip()
-            return datetime.strptime(date_str, "%Y-%m-%d").date()
-    return None
-
-# Save the last spin date to a file
-def save_last_spin_date(date):
-    with open("last_spin_date.txt", "w") as file:
-        file.write(date.strftime("%Y-%m-%d"))
-
-# Initialize last spin date
-last_spin_date = load_last_spin_date()
 
 def spin_wheel():
     total = 0
@@ -107,28 +92,31 @@ def sell_collected_blooks():
     for index, (category, item) in enumerate(collected_blooks):
         print(f"{index + 1}. {item} (Category: {category})")
 
-    sell_indices = input("Enter the numbers of the Blooks you want to sell, separated by commas (or 'cancel' to go back): ").strip().lower()
+    sell_indices = input("Enter the numbers of the Blooks you want to sell (or 'all' to sell all, 'cancel' to go back): ").strip().lower()
     
     if sell_indices == 'cancel':
         return
+    elif sell_indices == 'all':
+        sell_indices = list(range(len(collected_blooks)))  # Sell all Blooks
+    else:
+        try:
+            sell_indices = [int(i) - 1 for i in sell_indices.split(',')]
+        except ValueError:
+            print("Invalid input. Please enter numbers separated by commas or 'all'.")
+            return
 
-    try:
-        sell_indices = [int(i) - 1 for i in sell_indices.split(',')]
-        total_coins = 0
+    total_coins = 0
 
-        for index in sell_indices:
-            if 0 <= index < len(collected_blooks):
-                category, item = collected_blooks.pop(index)
-                total_coins += sell_item(category)
-                print(f"You sold {item} for {sell_item(category)} coins.")
-            else:
-                print(f"Invalid number: {index + 1}. It has been skipped.")
+    for index in sell_indices:
+        if 0 <= index < len(collected_blooks):
+            category, item = collected_blooks.pop(index)
+            total_coins += sell_item(category)
+            print(f"You sold {item} for {sell_item(category)} coins.")
+        else:
+            print(f"Invalid number: {index + 1}. It has been skipped.")
 
-        coins += total_coins
-        print(f"Total coins earned from sales: {total_coins} coins.")
-        
-    except ValueError:
-        print("Invalid input. Please enter numbers separated by commas.")
+    coins += total_coins
+    print(f"Total coins earned from sales: {total_coins} coins.")
 
 def sell_item(category):
     value_map = {
@@ -143,28 +131,24 @@ def sell_item(category):
     return value_map.get(category, 0)
 
 # Main game loop
+has_spun_wheel = False
+
 while True:
     print(f"You have {coins} Blook Coins.")
     print("1. Open a five-pack for 25 Blook Coins.")
-    print("2. Spin the wheel for bonus coins (one-time per day).")
+    if not has_spun_wheel:
+        print("2. Spin the wheel for bonus coins (one-time only).")
     print("3. Sell collected Blooks.")
     print("4. Exit.")
 
     action = input("Choose an action (1/2/3/4): ").strip()
-    
     if action == '1':
         open_packs()
-    elif action == '2':
-        today = datetime.now().date()
-        
-        if last_spin_date != today:
-            bonus_coins = spin_wheel()
-            coins += bonus_coins
-            last_spin_date = today  # Update last spin date to today
-            save_last_spin_date(last_spin_date)  # Save the new date
-            print(f"You spun the wheel and earned {bonus_coins} coins!")
-        else:
-            print("You've already spun the wheel today. Come back tomorrow!")
+    elif action == '2' and not has_spun_wheel:
+        bonus_coins = spin_wheel()
+        coins += bonus_coins
+        has_spun_wheel = True  # Set the flag to indicate the wheel has been spun
+        print(f"You spun the wheel and earned {bonus_coins} coins!")
     elif action == '3':
         sell_collected_blooks()
     elif action == '4':
