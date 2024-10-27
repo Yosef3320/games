@@ -1,6 +1,9 @@
 import turtle
 import random
 
+score = 0
+lives = 10
+
 wn = turtle.Screen()
 wn.title("falling objects game")
 wn.bgcolor("green")
@@ -40,6 +43,17 @@ for _ in range(20):
     bad_guys.append(bad_guy)
 
 
+pen = turtle.Turtle()
+pen.speed(0)
+pen.shape("square")
+pen.color("white")
+pen.hideturtle()
+pen.penup()
+pen.goto(0,260)
+font = ("Courier",24,"normal")
+pen.write("Score:{}  Lives:{}".format(score, lives), align= "Center",font=font)
+
+
 def go_left():
     player.direction = "left"
 def go_right():
@@ -73,6 +87,9 @@ while True:
             x = random.randint(-380,380)
             y = random.randint(300,400)
             good_guy.goto(x,y)
+            score += 1
+            pen.clear()
+            pen.write("Score:{}  Lives:{}".format(score, lives),align="Center",font=font)
     
 
     for bad_guy in bad_guys:
@@ -88,6 +105,12 @@ while True:
             x = random.randint(-380,380)
             y = random.randint(300,400)
             bad_guy.goto(x,y)
-
+            score -= 1
+            lives -= 1
+            pen.clear()
+            pen.write("Score:{}  Lives:{}".format(score, lives),align="Center",font=font)
+    if lives <= 1:
+        turtle.bye()
+        break
 
 wn.mainloop()
